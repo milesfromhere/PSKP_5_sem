@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMLHttpRequest Example</title>
+</head>
+<body>
+    <div class="container">
+        <h1>XMLHttpRequest Demo</h1>
+        <p>Нажмите кнопку для получения данных с сервера:</p>
+        <button onclick="loadData()">Получить данные</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function loadData() {
+            const xhr = new XMLHttpRequest();
+            const resultDiv = document.getElementById('result');
+            
+            xhr.open('GET', 'http://localhost:5000/api/name', true);
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resultDiv.innerHTML = 'Полученные данные: ' + xhr.responseText;
+                    } else {
+                        resultDiv.innerHTML = 'Ошибка: ' + xhr.status;
+                    }
+                }
+            };
+            
+            xhr.onerror = function() {
+                resultDiv.innerHTML = 'Ошибка сети';
+            };
+            
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

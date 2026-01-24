@@ -1,0 +1,10 @@
+{
+  "name": "lab-01",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 01 - ПСКП",
+  "main": "01-02-server.js",
+  "scripts": {
+    "start-02": "node 01-02-server.js",
+    "start-03": "node 01-03-server.js"
+  }
+}

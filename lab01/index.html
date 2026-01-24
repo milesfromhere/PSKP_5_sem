@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование сервера</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #e9ecef;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тестирование сервера 01-03</h1>
+        
+        <div class="test-section">
+            <h2>GET запросы</h2>
+            <button onclick="testGetRequest()">Простой GET запрос</button>
+            <button onclick="testGetWithParams()">GET с параметрами</button>
+        </div>
+
+        <div class="test-section">
+            <h2>POST запросы</h2>
+            <button onclick="testPostJson()">POST с JSON данными</button>
+            <button onclick="testPostForm()">POST с form-data</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Результат:</h2>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+        const SERVER_URL = 'http://localhost:3001';
+
+        async function testGetRequest() {
+            try {
+                const response = await fetch(SERVER_URL);
+                const data = await response.text();
+                resultDiv.innerHTML = `<pre>${escapeHtml(data)}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+
+        async function testGetWithParams() {
+            try {
+                const response = await fetch(`${SERVER_URL}/test?name=John&age=25&city=Minsk`);
+                const data = await response.text();
+                resultDiv.innerHTML = `<pre>${escapeHtml(data)}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+
+        async function testPostJson() {
+            try {
+                const response = await fetch(SERVER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'testuser',
+                        email: 'test@example.com',
+                        message: 'Это тестовое сообщение'
+                    })
+                });
+                const data = await response.text();
+                resultDiv.innerHTML = `<pre>${escapeHtml(data)}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+
+        async function testPostForm() {
+            try {
+                const formData = new FormData();
+                formData.append('username', 'john_doe');
+                formData.append('password', 'secret123');
+                formData.append('remember', 'true');
+
+                const response = await fetch(SERVER_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.text();
+                resultDiv.innerHTML = `<pre>${escapeHtml(data)}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

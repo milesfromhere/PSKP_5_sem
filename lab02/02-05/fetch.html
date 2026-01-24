@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Example</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Fetch API Demo</h1>
+        <p>Нажмите кнопку для получения данных с сервера:</p>
+        <button onclick="loadData()">Получить данные</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function loadData() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/name');
+                
+                if (response.ok) {
+                    const data = await response.text();
+                    resultDiv.innerHTML = 'Полученные данные: ' + data;
+                } else {
+                    resultDiv.innerHTML = 'Ошибка: ' + response.status;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = 'Ошибка сети: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

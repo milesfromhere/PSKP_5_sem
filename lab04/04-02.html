@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Результаты GET-запроса:</h1>
+    <div id="get_result"></div>
+    <button onclick="Get()">GET</button>
+    <br/>
+    <div style="padding: 20px">
+        <div class="row">
+            <label class="col-2">Идентификатор</label>
+            <input type="number" class="col-3" id="ID" min="0"/>
+        </div>
+        <div class="row">
+            <label class="col-2">ФИО</label>
+            <input type="text" class="col-3" id="Name"/>
+        </div>
+        <div class="row">
+            <label class="col-2">Дата рождения</label>
+            <input type="date" class="col-3" id="BDay"/>
+        </div>
+        <div class="row">
+            <button class="col-2" onclick="Post()">POST</button>
+            <button class="col-2" onclick="Put()">PUT</button>
+            <button class="col-2" onclick="Delete()">DELETE</button>
+        </div>
+    </div>
+    <script>
+        let allData = [];
+
+        function Post(){
+            console.log('POST');
+            fetch('http://localhost:5000/api/db', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+                body: JSON.stringify({id:parseInt(ID.value), name:Name.value, bday:BDay.value})
+            }).then(response=>{return response.json();})
+            .then((pdata)=>{console.log('POST.pdata', pdata); Get();});
+        }
+
+        function Put(){
+            console.log('PUT');
+            fetch('http://localhost:5000/api/db', {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+                body: JSON.stringify({id:parseInt(ID.value), name:Name.value, bday:BDay.value})
+            }).then(response=>{return response.json();})
+            .then((pdata)=>{console.log('PUT.pdata', pdata); Get()});
+        }
+
+        function Delete(){
+            console.log('DELETE');
+            let id = parseInt(ID.value);
+            fetch(`http://localhost:5000/api/db?id=${id}`, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+            }).then(response=>{return response.json();})
+            .then((pdata)=>{console.log('DELETE.pdata', pdata); Get();});
+        }
+
+        function Get(){
+            console.log('GET');
+            fetch('http://localhost:5000/api/db', {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+            }).then(response => {return response.json();})
+            .then((pdata)=>{
+                console.log('pdata', pdata);
+                allData = pdata;
+                get_result.innerHTML='';
+                pdata.forEach(el => {
+                    get_result.innerHTML += (el.id + '. ' + el.name + ' ' + el.bday + '<br/>');
+                });
+            });
+        }
+
+        document.getElementById('ID').addEventListener('input', function() {
+            let id = parseInt(this.value);
+            let found = allData.find(el => el.id === id);
+            if (found) {
+                document.getElementById('Name').value = found.name;
+                document.getElementById('BDay').value = found.bday;
+            } else {
+                document.getElementById('Name').value = '';
+                document.getElementById('BDay').value = '';
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "lab02-pskp",
+  "version": "1.0.0",
+  "description": "ЛР2 ПСКП",
+  "main": "index.js",
+  "scripts": {
+    "start-01": "node 02-01/02-01.js",
+    "start-02": "node 02-02/02-02.js",
+    "start-03": "node 02-03/02-03.js",
+    "start-04": "node 02-04/02-04.js",
+    "start-05": "node 02-05/02-05.js",
+    "start-06": "node 02-06/02-06.js"
+  },
+  "keywords": ["nodejs", "http", "server"],
+  "author": "Бондарик Никита",
+  "license": "ISC"
+}
