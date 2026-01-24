@@ -1,0 +1,21 @@
+{
+  "name": "m0603_bondarik",
+  "version": "1.0.1",
+  "description": "Модуль для отправки email сообщений",
+  "main": "m0603.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "email",
+    "mail",
+    "send",
+    "gmail"
+  ],
+  "author": "nikita bondarik",
+  "license": "MIT",
+  "dependencies": {
+    "m0603_bondarik": "^1.0.0",
+    "nodemailer": "^7.0.12"
+  }
+}
