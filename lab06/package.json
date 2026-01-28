@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "m0603": "^1.0.2",
-    "m0603_bondarik": "^1.0.0",
-    "nodemailer": "^7.0.12",
-    "sendmail": "^1.6.1"
-  }
-}
