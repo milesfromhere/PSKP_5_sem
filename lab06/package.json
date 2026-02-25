@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "nodemailer": "^7.0.12",
+    "requireg": "^0.2.2",
+    "sendmail": "^1.6.1"
+  }
+}

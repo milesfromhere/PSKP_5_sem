@@ -1,0 +1,34 @@
+curl "http://localhost:5000/connection?set=3000"
+
+curl "http://localhost:5000/headers"
+
+curl "http://localhost:5000/parameter?x=15&y=3"
+
+curl "http://localhost:5000/parameter/8/2"
+
+curl "http://localhost:5000/close"
+
+curl "http://localhost:5000/socket"
+
+curl -X POST "http://localhost:5000/req-data" -d "Test data for server"
+
+curl "http://localhost:5000/resp-status?code=418&mess=I'm%20a%20teapot"
+
+curl -X POST "http://localhost:5000/formparameter" \-d "text=HelloPOST&num=99&date=2024-01-01&check=yes&radio=B&textar=POST%20data&submit=Send2"
+
+  curl -X POST "http://localhost:5000/json" \
+  -H "Content-Type: application/json" \
+  -d '{"__comment":"Запрос.Пример","x":10,"y":5,"s":"Строка","o":{"surname":"Иванов","name":"Иван"},"m":[1,2,3,4,5]}'
+
+  curl -X POST "http://localhost:5000/xml" \
+  -H "Content-Type: application/xml" \
+  -d '<?xml version="1.0" encoding="UTF-8"?><request id="123"><x value="10"/><x value="20"/><x value="30"/><m value="Hello"/><m value=" "/><m value="World!"/></request>'
+
+  curl "http://localhost:5000/files"
+
+  curl "http://localhost:5000/files/test.txt" -o downloaded.txt
+
+  curl "http://localhost:5000/upload"
+
+  curl -X POST "http://localhost:5000/upload" \
+  -F "uploadedFile=@test.txt"
